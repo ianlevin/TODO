@@ -2,7 +2,8 @@ function newElement(){
     var escrito = document.getElementById("escrito").value
     var todo = {
         texto: escrito,
-        fecha: Date.now(),
+        fechaEscrito: Date.now(),
+        fechaHecho: null,
         estado: true
     }
     arrayTodos.push(todo)
@@ -57,7 +58,7 @@ function escribirTodos(){
 function tachar(id){
     if(arrayTodos[id].estado){
         arrayTodos[id].estado = false
-
+        arrayTodos[id].fechaHecho = Date.now()
     }else{
         arrayTodos[id].estado = true
     }
@@ -71,5 +72,25 @@ function eliminarHijo(padreid)
     while(elemento.hasChildNodes())
 	elemento.removeChild(elemento.firstChild)
  }
+
+function botonTodo(){
+    let texto = document.getElementById("tareamasrapida")
+    let resta = (arrayTodos[0].fechaHecho) - (arrayTodos[0].fechaEscrito)
+    texto.innerHTML = `La tarea que mas rapido se realizo fue`
+    console.log(Math.round(resta))
+}
+
+function obtnerTareaMasRapida(){
+    let tareaMasRapida = 0
+    let tareaMasRapidaId
+    for(let i = 0; i<arrayTodos.length; i++){
+        if(tareaMasRapida < Math.round((arrayTodos[i].fechaHecho) - (arrayTodos[i].fechaEscrito))){
+            tareaMasRapida = Math.round((arrayTodos[i].fechaHecho) - (arrayTodos[i].fechaEscrito))
+            tareaMasRapidaId = i
+        }
+    }
+    console.log(tareaMasRapidaId)
+    return tareaMasRapidaId
+}
 
 var arrayTodos = []
