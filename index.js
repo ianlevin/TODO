@@ -24,7 +24,7 @@ function escribirTodos(){
             ul.appendChild(li)
                 
             let btn = document.createElement("input")
-            let texto = document.createTextNode(arrayTodos[i].texto)
+            let texto = document.createTextNode(`${arrayTodos[i].texto} `)
             li.appendChild(texto)
 
             btn.setAttribute("type", "checkbox")
@@ -41,7 +41,7 @@ function escribirTodos(){
             ul.appendChild(li)
                 
             let btn = document.createElement("input")
-            li.innerHTML = `<del>${arrayTodos[i].texto}</del>`
+            li.innerHTML = `<del>${arrayTodos[i].texto} </del>`
 
             btn.setAttribute("type", "checkbox")
             btn.setAttribute("id", `ck${i}`)
@@ -75,21 +75,27 @@ function eliminarHijo(padreid)
 
 function botonTodo(){
     let texto = document.getElementById("tareamasrapida")
-    let resta = (arrayTodos[0].fechaHecho) - (arrayTodos[0].fechaEscrito)
-    texto.innerHTML = `La tarea que mas rapido se realizo fue`
-    console.log(Math.round(resta))
+    if(obtnerTareaMasRapida() != null){
+        texto.innerHTML = `La tarea que mas rapido se realizo fue ${arrayTodos[obtnerTareaMasRapida()].texto}`
+    }else{
+        texto.innerHTML = `No se realizo ninguna tarea`
+    }
+    
 }
 
 function obtnerTareaMasRapida(){
-    let tareaMasRapida = 0
-    let tareaMasRapidaId
+    let tareaMasRapida = 99999999999999
+    let tareaMasRapidaId = null
+
     for(let i = 0; i<arrayTodos.length; i++){
-        if(tareaMasRapida < Math.round((arrayTodos[i].fechaHecho) - (arrayTodos[i].fechaEscrito))){
-            tareaMasRapida = Math.round((arrayTodos[i].fechaHecho) - (arrayTodos[i].fechaEscrito))
-            tareaMasRapidaId = i
+        if(arrayTodos[i].estado == false){
+            if(tareaMasRapida > Math.round((arrayTodos[i].fechaHecho) - (arrayTodos[i].fechaEscrito))){
+                tareaMasRapida = Math.round((arrayTodos[i].fechaHecho) - (arrayTodos[i].fechaEscrito))
+                console.log(tareaMasRapida)
+                tareaMasRapidaId = i
+            }
         }
     }
-    console.log(tareaMasRapidaId)
     return tareaMasRapidaId
 }
 
